@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/rabbitmq/amqp091-go"
@@ -47,4 +48,27 @@ func main() {
 	}
 
 	fmt.Println("Queue: ", queue)
+
+	ctx := context.Background()
+
+	err = channel.PublishWithContext(
+		ctx,
+		"",
+		"TestQueue",
+		false,
+		false,
+		amqp091.Publishing{
+			ContentType: "text/plain",
+			Body: []byte{
+				1,
+			},
+		},
+	)
+
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+
+	fmt.Println("Successfully published message to the queue")
 }
