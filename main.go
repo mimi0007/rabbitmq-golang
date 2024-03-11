@@ -30,4 +30,22 @@ func main() {
 	}
 
 	defer channel.Close()
+
+	// Creating Queue to publish messages on that
+	queue, err := channel.QueueDeclare(
+		"TestRabbitMQ",
+		false,
+		false,
+		false,
+		false,
+		false,
+		nil,
+	)
+
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+
+	fmt.Println("Queue: ", queue)
 }
