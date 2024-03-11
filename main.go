@@ -12,7 +12,7 @@ func main() {
 	connection, err := amqp091.Dial("amqp://guest:guest@localhost:5672/")
 
 	if err != nil {
-		fmt.Print(connection)
+		fmt.Print(err)
 		panic(err)
 	}
 
@@ -20,4 +20,14 @@ func main() {
 	defer connection.Close()
 
 	fmt.Println("Successfully connected to RabbitMQ instance")
+
+	// This will open a unique channel for sending the bulk messages to the queue
+	channel, err := connection.Channel()
+
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+
+	defer channel.Close()
 }
