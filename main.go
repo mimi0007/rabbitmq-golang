@@ -16,6 +16,7 @@ func main() {
 		panic(err)
 	}
 
+	// The connection with rabbitmq will be closed within the execution of the main function
 	defer connection.Close()
 
 	fmt.Println("Successfully connected to RabbitMQ instance")
